@@ -1,0 +1,121 @@
+
+#wrapper{
+    position: relative;
+    margin: 20px auto;
+}
+.level{
+    margin-bottom: 10px;
+    text-align: center;
+}
+.level button{
+    background: lightseagreen;
+    padding: 5px 15px;
+    color: #fff;
+    border: none;
+    text-decoration: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.level button.active{
+    background: lightskyblue;
+}
+
+/* 元素垂直居中 */
+table{
+    margin: 0 auto;
+    border-spacing: 1px;
+    background: #929196;   
+}
+td{
+    padding: 0;
+    height: 20px;
+    width: 20px;
+    border: 2px solid;
+    background: #ccc;
+    border-color: #fff #a1a1a1 #a1a1a1 #fff;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;  
+    box-sizing: border-box;
+}
+td.zero{
+    background: #d9d9d9;
+    border: none;
+    color: black;
+}
+td.one{
+    background: #d9d9d9;
+    border: none;
+    color: #555;
+}
+td.two{
+    background: #d9d9d9;
+    border: none;
+    color: rgb(8, 134, 48);
+}
+td.three{
+    background: #d9d9d9;
+    border: none;
+    color: rgb(151, 40, 40);    
+}
+td.four{
+    background: #d9d9d9;
+    border: none;
+    color: red;
+}
+td.five{
+    background: #d9d9d9;
+    border: none;
+    color: rgb(24, 36, 209);
+}
+td.six{
+    background: #d9d9d9;
+    color: purple;
+}
+td.seven{
+
+    background: #d9d9d9;
+    border: none;
+    color: rgb(236, 112, 10);
+}
+td.eight{
+
+    background: #d9d9d9;
+    border: none;
+    color: black;
+}
+.info{
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.mine{
+    background-color: #d9d9d9;
+    background-image: url(../images/mine.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.flag{
+    background-color: #ccc;
+    background-image: url(../images/flag.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.img-box{
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100px;
+    width: 250px;
+    margin-top: -46px;
+    margin-left: -127px;
+}
