@@ -10,9 +10,8 @@ function Sweep(tr, td, mineNum) {
     this.squares = [];//储存所有方块的信息，它是一个二维数组，按行与列的方式排放，存取都使用行列的形式
     this.tds = [];//储存所有单元格的DOM(二维数组)
     this.spareNum = mineNum; //剩余雷的数量
-    this.allRight = false;//用于判断是否所有雷都被筛选出来了
     this.trueNum = 0;//储存正确旗子的数量
-
+    this.clickNum = 0;//记录插同一面旗的点击次数
     this.parent = document.getElementsByClassName('gamebox')[0];
 }
 
@@ -28,7 +27,7 @@ Sweep.prototype.init = function() {
         */ 
         this.squares[i] = [];
         for(j = 0; j < this.td; j ++) {
-            if(mineArr.indexOf(++n) != -1) { //判断该位置是否有雷
+            if(mineArr.indexOf(n ++) != -1) { //判断该位置是否有雷 n++可以保证从第零为开始遍历
                 this.squares[i][j] = {type: 'mine', x: j, y: i};
             }else {
                 this.squares[i][j] = {type: 'number', x: j, y: i, value: 0  };
@@ -45,6 +44,8 @@ Sweep.prototype.init = function() {
 
     this.spareMine = document.getElementsByClassName('mine-num')[0];
     this.spareMine.innerHTML = this.mineNum;
+    this.spareNum = this.mineNum;//避免重新开始的时候，this.spareNum还是为0
+    this.trueNum = 0;//避免重新开始时，trueNum为10
 
 }
 
@@ -139,7 +140,7 @@ Sweep.prototype.play = function(et, obj) { //因为要判断是左键还是右�
     var consquare  = this.squares[obj.pos[0]][obj.pos[1]];//点击到方块的信息{type: ...,x: ...,y: .....}
     var that = this;
     var cl = ['zero','one','two','three','four','five','six','seven','eight']
-    if(et.which === 1 && obj.className != 'flag') { //后面的条件保证点击的不是已经插旗的方块
+    if(et.which === 1 ) { //后面的条件保证点击的不是已经插旗的方块
         if(consquare.type == 'number') {
              //判断是否是数字
             obj.innerHTML = consquare.value;
@@ -201,10 +202,22 @@ Sweep.prototype.play = function(et, obj) { //因为要判断是左键还是右�
        }
        obj.className = obj.className=='flag'?'':'flag';//功能1
        if(this.squares[obj.pos[0]][obj.pos[1]].type == 'mine') {//功能2
-           this.allRight = true;
-           this.trueNum ++;
-       }else{
-           this.allRight = false;
+        /*
+        若该方格没有被点击过，则重新记录它的点击数量,再次点击时，点击数量增加
+        */
+           if(!this.tds[obj.pos[0]][obj.pos[1]].flag) {//若这个方格没有被点击过，则进入函数
+            this.tds[obj.pos[0]][obj.pos[1]].flag = true;//点击过后就要标记后好
+            this.clickNum = 0;
+            this.trueNum ++;
+           }else {
+               this.clickNum ++;
+               if(this.clickNum % 2 == 1) {
+                   this.trueNum --;
+               }
+               if(this.clickNum % 2 == 0) {
+                this.trueNum ++;
+               }
+           }
        }
        //剩余雷数一定是大于等于0
        if(this.spareNum > 0) {
@@ -217,17 +230,16 @@ Sweep.prototype.play = function(et, obj) { //因为要判断是左键还是右�
             }
        }
        console.log(this.spareNum)
+       console.log(this.trueNum)
        //判断游戏是成功还是失败
        if(this.spareNum == 0){
-           console.log(this.trueNum);
             if(this.trueNum == this.mineNum){
                 alert('恭喜你，游戏成功！')
             }else{
                 alert('很遗憾，游戏失败！')
                 this.gameOver();
             }
-            this.spareNum = this.mineNum;//避免重新开始的时候，this.spareNum还是为0
-            this.trueNum = 0;//避免重新开始时，trueNum为10
+
        }
        
     }
@@ -267,6 +279,8 @@ for(let i = 0; i < btns.length - 1; i ++) { //利用let解决闭包带来的问�
         btns[state].className = '';//去除上一个点击的样式
         this.className = 'active';//给点击的按钮添加样式
         sweep = new Sweep(...arr[i]);
+        console.log(sweep.createNum());
+        console.log(sweep.squares);
         sweep.init();
         state = i;
     }
@@ -276,3 +290,10 @@ btns[3].onclick = function() {
     
     sweep.init();
 }
+
+/*
+bug
+1.雷的数量不对，传进10个雷，最后出现的雷数不一样
+2.旗子重复插会影响最后结果的判断
+*/
+
