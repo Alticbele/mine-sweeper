@@ -229,8 +229,8 @@ Sweep.prototype.play = function(et, obj) { //因为要判断是左键还是右�
                 this.spareMine.innerHTML = this.spareNum;
             }
        }
-       console.log(this.spareNum)
-       console.log(this.trueNum)
+    //    console.log(this.spareNum)
+    //    console.log(this.trueNum)
        //判断游戏是成功还是失败
        if(this.spareNum == 0){
             if(this.trueNum == this.mineNum){
@@ -279,8 +279,8 @@ for(let i = 0; i < btns.length - 1; i ++) { //利用let解决闭包带来的问�
         btns[state].className = '';//去除上一个点击的样式
         this.className = 'active';//给点击的按钮添加样式
         sweep = new Sweep(...arr[i]);
-        console.log(sweep.createNum());
-        console.log(sweep.squares);
+        // console.log(sweep.createNum());
+        // console.log(sweep.squares);
         sweep.init();
         state = i;
     }
